@@ -1,0 +1,10 @@
+components/
+node_modules/
+bower_components/
+npm-debug.log
+.nyc_output
+.env
+dist/*
+.azk
+.DS_Store
+uploads
