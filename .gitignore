@@ -4,8 +4,8 @@ bower_components/
 npm-debug.log
 .nyc_output
 .env
-dist/*
+dist/
 .azk
 .DS_Store
 uploads
-./lib
+lib/
