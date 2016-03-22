@@ -11,10 +11,9 @@
     "clean": "rimraf ./dist",
     "test": "NODE_ENV=test mocha --reporter progress --compilers js:'babel-core/register' --recursive \"__tests__/**/*.spec.js\"",
     "test:watch": "NODE_ENV=test mocha -w --reporter progress --compilers js:'babel-core/register' --recursive \"./__tests__/**/*.spec.js\"",
-    "start": "babel-node index.js",
-    "dev": "webpack-dev-server",
-    "dev:server": "nodemon -w index.js --exec babel-node -- index.js",
-    "build": "NODE_ENV=production webpack -p",
+    "start": "node ./lib/index.js",    
+    "dev": "babel-watch -w ./server ./server/index.js",
+    "build": "NODE_ENV=production babel ./server -d ./lib && webpack -p",
     "procfile": "npm run build && npm start"
   },
   "author": "Alex Chan <alexander.m.chan@gmail.com>",
@@ -22,6 +21,7 @@
   "devDependencies": {
     "autoprefixer": "^6.3.3",
     "babel-eslint": "5.0.0",
+    "babel-watch": "1.0.2",
     "bootstrap": "4.0.0-alpha.2",
     "chai": "3.5.0",
     "css-loader": "^0.23.0",

@@ -8,3 +8,4 @@ dist/*
 .azk
 .DS_Store
 uploads
+./lib

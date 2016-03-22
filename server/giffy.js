@@ -6,7 +6,13 @@ const GIFFY_SEARCH_URL = 'http://api.giphy.com/v1/gifs/search'
 
 const SLUG_REGEX = /(.*)-/
 function slugToDescription(slug) {
+  if (!slug) {
+    return
+  }
   const hyphenDesc = slug.match(SLUG_REGEX)
+  if (!hyphenDesc) {
+    return slug
+  }
   if (hyphenDesc.length >= 1) {
     return hyphenDesc[1].replace(/\-/g, ' ')
   }
@@ -30,7 +36,10 @@ function search({searchString, offset, limit, rating}) {
             return resp.json()
           }
         }).then(result => {
-          return result.data
+
+          return result.data.map( line => {
+            return Object.assign({}, line, {description: slugToDescription(line.slug)})
+          })
         })
 }
 
