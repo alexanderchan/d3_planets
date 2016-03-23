@@ -28,3 +28,15 @@ svg {
   // fill: none;
   // stroke-width: 1.5;
 }
+
+.axis text {
+  font: 10px sans-serif;
+  fill: white;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
