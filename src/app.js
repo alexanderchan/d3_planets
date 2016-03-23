@@ -1,17 +1,6 @@
 import React from 'react'
-import Dropzone from 'react-dropzone'
 
-import './style.scss'
 
-const DL_STYLE = {
-    width: '100%',
-    height: '100px',
-    borderWidth: '2px',
-    borderColor: '#666',
-    borderStyle: 'dashed',
-    borderRadius: '5px',
-    padding: '10px'
-}
 export default class App extends React.Component {
 
   constructor(props) {

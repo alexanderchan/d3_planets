@@ -1,15 +1,24 @@
 // Core variables and mixins
-@import "~bootstrap/scss/_variables.scss";
-@import "~bootstrap/scss/mixins";
+// @import "~bootstrap/scss/_variables.scss";
+// @import "~bootstrap/scss/mixins";
+//
+// @import "~bootstrap/scss/normalize";
+// @import "~bootstrap/scss/reboot";
+// @import "~bootstrap/scss/grid";
+//
+// @import "~bootstrap/scss/code";
+// @import "~bootstrap/scss/type";
+//
+// // Utility classes
+// @import "~bootstrap/scss/utilities";
+// @import "~bootstrap/scss/utilities-spacing";
+// @import "~bootstrap/scss/utilities-responsive";
 
-@import "~bootstrap/scss/normalize";
-@import "~bootstrap/scss/reboot";
-@import "~bootstrap/scss/grid";
+body {
+  background: #fff;
+}
 
-@import "~bootstrap/scss/code";
-@import "~bootstrap/scss/type";
-
-// Utility classes
-@import "~bootstrap/scss/utilities";
-@import "~bootstrap/scss/utilities-spacing";
-@import "~bootstrap/scss/utilities-responsive";
+.item {
+  // fill: none;
+  // stroke-width: 1.5;
+}
