@@ -15,3 +15,4 @@ Also these params are used:
 | ---------         | --------                |
 | DB_CONNECTION_URL | postgres://.... |
 | SHORT_PREFIX      | https://sleepy-journey-51543.herokuapp.com |
+restart
