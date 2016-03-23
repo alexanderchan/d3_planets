@@ -21,22 +21,39 @@ if (process.env.NODE_ENV === 'development') {
   app.use(express.static(__dirname + '/dist', {maxAge: 3600}))
 }
 
+var recent_submissions = []
 
-app.get('/search', function search(request, response, next) {
+app.get('/api/latest/imagesearch', (request, response) => {
+  response.json(recent_submissions)
+})
+
+app.get('/api/imagesearch/:searchString', function search(request, response) {
   // response.json({ q: request.query.q })
   const RESULTS_PER_PAGE = 25
+  const MAX_LEN_HISTORY = 40
   const offset = request.query.page ? request.query.page * RESULTS_PER_PAGE : 0
+  const shortQuery = typeof request.params.searchString === 'string' ? request.params.searchString.substring(0, MAX_LEN_HISTORY) : ''
+  recent_submissions = [{ term: shortQuery,
+                          when: new Date()},
+                        ...recent_submissions]
 
-  giffy.search({searchString: request.query.q,
+  if (recent_submissions.length > 10) {
+    recent_submissions.length = 9
+  }
+
+  giffy.search({searchString: request.params.searchString,
                 offset})
       .then( results => {
-        return results.map( result => {
-          return {
-            url: result.images.fixed_height.url,
-            description: result.description
-
+        response.json(
+          results.map( result => {
+            return {
+              url: result.images.fixed_height.url,
+              thumbnail: result.images.fixed_width_still.url,
+              context: result.source,
+              snippet: result.description
+            }
           }
-        })
+        ))
       })
 })
 

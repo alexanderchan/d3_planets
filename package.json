@@ -1,5 +1,5 @@
 {
-  "name": "url-shortener-fcc-ac",
+  "name": "fcc_image_search",
   "version": "1.0.0",
   "description": "A simple url shortener",
   "main": "dist/bundle.js",
@@ -11,7 +11,7 @@
     "clean": "rimraf ./dist",
     "test": "NODE_ENV=test mocha --reporter progress --compilers js:'babel-core/register' --recursive \"__tests__/**/*.spec.js\"",
     "test:watch": "NODE_ENV=test mocha -w --reporter progress --compilers js:'babel-core/register' --recursive \"./__tests__/**/*.spec.js\"",
-    "start": "node ./lib/index.js",    
+    "start": "node ./lib/index.js",
     "dev": "babel-watch -w ./server ./server/index.js",
     "build": "NODE_ENV=production babel ./server -d ./lib && webpack -p",
     "procfile": "npm run build && npm start"
