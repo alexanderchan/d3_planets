@@ -1,7 +1,18 @@
 import d3 from 'd3'
 import React from 'react'
 
-var width = 960,
+var planets = [
+  { name: 'Moon',
+    radius: '1737',
+    color: 'grey'
+  },
+  { name: 'Mercury',
+    radius: '2440',
+    color: '#444'
+  }
+]
+
+var width = 1200,
     height = 500
 
 var x = d3.scale.linear()
@@ -61,7 +72,7 @@ export default class Maddie extends React.Component {
       .attr('cx', function(d) { return x(d.x) })
       .attr('cy', 0)
       .style('fill', function() {
-          return 'hsl(' + Math.random() * 360 + ",100%,50%)"
+          return 'hsl(' + Math.random() * 360 + ',100%,50%)'
         })
       // .style('stroke', '#3E6E9C')
       .on('click', () => console.log('caught me'))
@@ -72,9 +83,12 @@ export default class Maddie extends React.Component {
     item.exit().filter(':not(.exiting)') // Don't select already exiting nodes
       .classed('exiting', true)
     .transition().duration(1000).ease('bounce')
-      .attr('cy', height)
+      .attr('cx', function() {
+          return x(Math.random())
+      })
+      .attr('cy', () => Math.random() > 0.5 ? height : 0 )
       // .style('stroke', 'red')
-      .style('fill','black')
+      .style('fill', 'black')
       .remove()
   }
 }
