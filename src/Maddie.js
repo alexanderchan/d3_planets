@@ -90,7 +90,8 @@ export default class Maddie extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      items: []
+      items: [],
+      planets: planets
     }
 
     const MAX_LENGTH = 30
@@ -107,7 +108,7 @@ export default class Maddie extends React.Component {
   planetStart(currentIndex) {
     return planets.reduce( (acc, planet, i) => {
         if (currentIndex >= i ) {
-          return acc;
+          return acc
         } else {
           return acc + planet.radius * 2
         }
@@ -120,21 +121,9 @@ export default class Maddie extends React.Component {
       <div>
         <svg style={SVG_STYLE} onClick={this.addData} width={width} height={height} ref={c => this.chart = c}>
 
-          {/*<circle className="item" fill={planets[0].color} r={xPlanets(planets[0].radius)} cx={xPlanets(planets[0].radius)} cy={height - xPlanets(planets[0].radius)}/>
+          {/* <circle className="item" fill={planets[0].color} r={xPlanets(planets[0].radius)} cx={xPlanets(planets[0].radius)} cy={height - xPlanets(planets[0].radius)}/>
           <circle className="item" fill={planets[1].color} r={xPlanets(planets[1].radius)} cx={xPlanets(planets[0].radius * 2 + planets[1].radius)} cy={height - xPlanets(planets[1].radius)}/>
           <circle className="item" fill={planets[2].color} r={xPlanets(planets[2].radius)} cx={xPlanets(planets[0].radius * 2 + planets[1].radius * 2 + planets[2].radius)} cy={height - xPlanets(planets[2].radius)}/>*/}
-
-          {
-            planets.map( (planet, index) => {
-          return <circle className="item"
-                 key={index}
-                 fill={planet.color}
-                 r={xPlanets(planet.radius)}
-                 cy={height - xPlanets(planet.radius)}
-                 cx={width-xPlanets(this.planetStart(index))}
-                  />
-                  })
-                  }
 
         </svg>
 
@@ -154,42 +143,65 @@ export default class Maddie extends React.Component {
   componentDidMount() {
     d3.select(this.chart).append('g')
     .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + (height - 40) + ')')
-    .call(xAxisPlanets)
+    .attr('transform', 'translate(0,' + (height - 20) + ')')
+
 
     // this.alwaysAdd()
-
+    this.d3render();
   }
-  componentDidUpdate() {
-    var item = d3.select(this.chart).selectAll('.planet')
+
+  d3render() {
+
+    var item = d3.select(this.chart).selectAll('.stars')
       .data(this.state.items, function(d) { return d.key })
 
     item.enter().append('circle')
       .attr('class', 'item')
-      .attr('class', 'planet')
+      .attr('class', 'stars')
       .attr('r', function(d) { return r(d.r) })
       .attr('cx', function(d) { return x(d.x) })
       .attr('cy', 0)
       .style('fill', function() {
           return 'hsl(' + Math.random() * 360 + ',100%,50%)'
         })
-      // .style('stroke', '#3E6E9C')
       .on('click', () => console.log('caught me'))
     .transition().duration(1000)
       .attr('cy', function(d) { return y(d.y) })
-      // .style('stroke', '#81E797')
 
     item.exit().filter(':not(.exiting)') // Don't select already exiting nodes
       .classed('exiting', true)
     .transition().duration(1000).ease('bounce')
-      // .attr('cx', function() {
-      //     return x(Math.random())
-      // })
-      // .attr('cy', () => Math.random() > 0.5 ? height : 0 )
       .attr('cy', height)
-      // .style('stroke', 'red')
       .style('opacity', 0.3)
-      // .style('fill', 'black')
       .remove()
+
+      var planet = d3.select(this.chart).selectAll('.planet')
+                    .data(this.state.planets, p => p.name )
+
+      planet.enter().append('circle')
+              .attr('class', 'planet')
+
+              // fill={planet.color}
+              // r={xPlanets(planet.radius)}
+              // cy={height - xPlanets(planet.radius)}
+              // cx={width-xPlanets(this.planetStart(index))}
+      planet.attr({
+        fill: planet => planet.color,
+        r: planet => xPlanets(planet.radius),
+        cy: planet => height - 20 - xPlanets(planet.radius),
+        cx: (planet, index) => width - xPlanets(this.planetStart(index))
+      })
+
+      planet.exit().transition().duration(500).ease('bounce')
+              .style('opacity', 0.1)
+              .remove()
+
+       d3.select(this.chart).select('.x.axis')
+                .transition().duration(500)
+                .call(xAxisPlanets)
+
+  }
+  componentDidUpdate() {
+    this.d3render();
   }
 }
