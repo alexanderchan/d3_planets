@@ -51,7 +51,7 @@ var extraPlanets = [
   },
   {
     name: 'Sun',
-    radius: 696.300,
+    radius: R,
     color: 'rgba(247, 251, 35, 1)',
     textColor: 'black'
   },
@@ -61,8 +61,51 @@ var extraPlanets = [
     radius: 1.711 * R,
     color: '#eeeeff',
     textColor: 'black'
-  }
+  },
+  {
+    name: 'Pollux',
+    radius: 8.8 * R,
+    color: "#FFA349"
+  },
+  {
+    name: 'Arcturus (Orange Giant)',
+    radius: 25.4 * R,
+    color: "#DFE1E3",
+    textColor: 'black'
+  },
+  {
+    name: 'Aldebaran (Orange Giant)',
+    radius: 44.2 * R,
+    color: "#FD3200",
+  },
+  {
+    name: 'Rigel (Blue Supergiant)',
+    radius: 78 * R,
+    color: '#89D5F0'
+  },
+  {
+    name: 'Pistol Star (Blue Hypergiant)',
+    radius: 306 * R,
+    color: '#39DBF2'
+  },
+  {
+    name: 'Antares A (Red Supergiant)',
+    radius: 883 * R,
+    color: '#FEAF39'
+  },
+  // {
+  //   name: 'Mu Cephei  (red supergiant)',
+  //   radius: 1000 * R,
+  //   color: '#BA0000'
+  // },
+  {
+    name: 'VY Canis Majoris (Red Hypergiant)',
+    radius: 1420 * R,
+    color: '#F4E4CB',
+    textColor: 'black'
+  },
 ]
+
 
 var width = 1200
 var height = 700
