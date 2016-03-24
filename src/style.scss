@@ -40,3 +40,8 @@ svg {
   stroke: #fff;
   shape-rendering: crispEdges;
 }
+.planet-desc {
+  fill: white;
+  font: 14px sans-serif;
+  filter: drop-shadow( -5px -5px 5px #000 );
+}

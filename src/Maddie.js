@@ -52,13 +52,15 @@ var extraPlanets = [
   {
     name: 'Sun',
     radius: 696.300,
-    color: 'rgba(247, 251, 35, 1)'
+    color: 'rgba(247, 251, 35, 1)',
+    textColor: 'black'
   },
 
   {
     name: 'Sirius A',
     radius: 1.711 * R,
     color: '#eeeeff',
+    textColor: 'black'
   }
 ]
 
@@ -212,15 +214,44 @@ export default class Maddie extends React.Component {
       var planet = d3.select(this.chart).selectAll('.planet')
                     .data(this.state.planets, p => p.name )
 
-      planet.enter().append('circle')
+    var ent =  planet.enter()
+              .append('g')
+              .attr('transform', (planet, index) => {
+                // Set d.x and d.y here so that other elements can use it. d is
+                // expected to be an object here.
+                planet.x = width - xPlanets(this.planetStart(index))
+                return 'translate(' + planet.x + ',' + 0 + ')'
+              })
               .attr('class', 'planet')
 
-      planet.transition().duration(800).attr({
-        fill: planet => planet.color,
-        r: planet => xPlanets(planet.radius),
-        cy: planet => height - 20 - xPlanets(planet.radius),
-        cx: (planet, index) => width - xPlanets(this.planetStart(index))
+    ent.append('circle')
+    ent.append('text')
+
+
+
+      planet
+      .transition().duration(800)
+      .attr('transform', (planet, index) => {
+        // Set d.x and d.y here so that other elements can use it. d is
+        // expected to be an object here.
+        planet.x = width - xPlanets(this.planetStart(index))
+        planet.y = height - 20 - xPlanets(planet.radius)
+        return 'translate(' + planet.x + ',' + planet.y + ')'
       })
+      .selectAll('circle')
+            .attr({
+            fill: planet => planet.color,
+            r: planet => xPlanets(planet.radius),
+            // cy: planet => height - 20 - xPlanets(planet.radius),
+            // cx: (planet, index) => width - xPlanets(this.planetStart(index))
+          })
+
+      planet
+      .selectAll('text')
+        .attr('class', 'planet-desc')
+        .attr('text-anchor', 'middle')
+        .style('fill', planet => planet.textColor)
+        .text( planet => planet.name )
 
       planet.exit().transition().duration(500).ease('bounce')
               .style('opacity', 0.1)
