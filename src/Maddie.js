@@ -199,7 +199,7 @@ export default class Maddie extends React.Component {
                      fontSize: '2em'}}>
           {this.state.planets[this.state.planets.length - 1].name}
         </div>
-        <svg style={SVG_STYLE} onClick={this.addPlanet} onTouchEnd={this.addPlanet} width={width} height={height} ref={c => this.chart = c}>
+        <svg style={SVG_STYLE} onClick={this.addPlanet} width={width} height={height} ref={c => this.chart = c}>
         </svg>
       </div>
 
