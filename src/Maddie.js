@@ -116,23 +116,23 @@ export default class Maddie extends React.Component {
 
     this.addPlanet = () => {
       if (this.state.growing === true) {
+        if (this.state.extraPlanets[0]) {
         this.setState({
           planets: [...this.state.planets, this.state.extraPlanets[0] ],
-          extraPlanets: this.state.extraPlanets.slice(1)
+          extraPlanets: this.state.extraPlanets.slice(1),
         })
       }
-      // else {
-      //   this.setState({
-      //     planets: this.state.planets.slice(0, this.state.planets.length - 2),
-      //     extraPlanets: [...this.state.extraPlanets, this.state.planets[this.state.planets.length - 1]]
-      //   })
-      // }
+      }
+      else {
+        var newExtraPlanets = [...this.state.extraPlanets, this.state.planets[this.state.planets.length - 1]]
+        var newPlanets = this.state.planets.slice(0, this.state.planets.length - 1)
+        this.setState({
+          planets: this.state.planets.slice(0, this.state.planets.length - 1),
+          extraPlanets: newExtraPlanets,
+        })
+      }
 
-      // if (this.state.planets.length <= 0 || this.state.extraPlanets.length <= 0) {
-      //   this.setState({
-      //     growing: !growing
-      //   })
-      // }
+
 
     }
   }
@@ -152,7 +152,7 @@ export default class Maddie extends React.Component {
       <div>
         <div style={{color: 'white',
                      fontSize: '2em'}}>
-          {this.state.planets[this.state.planets.length-1].name}
+          {this.state.planets[this.state.planets.length - 1].name}
         </div>
         <svg style={SVG_STYLE} onClick={this.addPlanet} onTouchEnd={this.addPlanet} width={width} height={height} ref={c => this.chart = c}>
         </svg>
@@ -212,14 +212,9 @@ export default class Maddie extends React.Component {
       var planet = d3.select(this.chart).selectAll('.planet')
                     .data(this.state.planets, p => p.name )
 
-      var ent = planet.enter()
-
-      ent.append('circle')
+      planet.enter().append('circle')
               .attr('class', 'planet')
-              // fill={planet.color}
-              // r={xPlanets(planet.radius)}
-              // cy={height - xPlanets(planet.radius)}
-              // cx={width-xPlanets(this.planetStart(index))}
+
       planet.transition().duration(800).attr({
         fill: planet => planet.color,
         r: planet => xPlanets(planet.radius),
@@ -227,10 +222,22 @@ export default class Maddie extends React.Component {
         cx: (planet, index) => width - xPlanets(this.planetStart(index))
       })
 
-      // planet.exit().transition().duration(500).ease('bounce')
-      //         .style('opacity', 0.1)
-      //         .remove()
+      planet.exit().transition().duration(500).ease('bounce')
+              .style('opacity', 0.1)
+              .remove()
 
+      // var planetText = d3.select(this.chart).selectAll('.planet-text')
+      //                   .data(this.state.planets, p => p.name )
+      //
+      //  planetText.enter().append('text')
+      //           .attr('.planet-text')
+      //
+      // planetText.transition().duration(800).attr({
+      //             fill: 'white',
+      //             cy: planet => height - 20 - xPlanets(planet.radius),
+      //             cx: (planet, index) => width - xPlanets(this.planetStart(index))
+      //           })
+      //
        d3.select(this.chart).select('.x.axis')
                 .transition().duration(500)
                 .call(xAxisPlanets)
