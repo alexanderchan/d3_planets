@@ -1,5 +1,9 @@
 import d3 from 'd3'
 import React from 'react'
+// var Howl = require('howler').Howl
+
+require('./Maddie Wan Wan.m4a')
+require('./blahblah.m4a')
 
 const R = 695.7
 
@@ -10,8 +14,6 @@ var planets = [
     color: 'grey'
   },
 ]
-// pollux, arcturus(red giant), Aldebaran (red giant), Rigel (Blue Supergiant), Pistol Star (Blue Hypergiant)
-// Antares A (Red Supergiant), Mu Cephei  (red supergiant), VY Canis Majoris (Red Hypergiant)
 
 var extraPlanets = [
   {
@@ -65,18 +67,18 @@ var extraPlanets = [
   {
     name: 'Pollux',
     radius: 8.8 * R,
-    color: "#FFA349"
+    color: '#FFA349'
   },
   {
     name: 'Arcturus (Orange Giant)',
     radius: 25.4 * R,
-    color: "#DFE1E3",
+    color: '#DFE1E3',
     textColor: 'black'
   },
   {
     name: 'Aldebaran (Orange Giant)',
     radius: 44.2 * R,
-    color: "#FD3200",
+    color: '#FD3200',
   },
   {
     name: 'Rigel (Blue Supergiant)',
@@ -157,6 +159,32 @@ export default class Maddie extends React.Component {
       this.setState({
         items: newItems
       })
+
+    this.globalOnKeyDown = (event) => {
+      switch (event.code) {
+        case 'ArrowLeft':
+          this.addPlanet()
+          break
+        case 'ArrowRight':
+            this.addPlanet()
+            break
+        default:
+          return
+      }
+    }
+
+    //
+    // this.sound = new Howl({
+    //   src: 'src/Maddie Wan Wan.m4a',
+    //   // autoplay: true,
+    //   // loop: true,
+    //   // volume: 0.5,
+    //   // onend: function() {
+    //   //   console.log('Finished!')
+    //   // }
+    // })
+
+
     }
 
     this.addPlanet = () => {
@@ -166,16 +194,32 @@ export default class Maddie extends React.Component {
           planets: [...this.state.planets, this.state.extraPlanets[0] ],
           extraPlanets: this.state.extraPlanets.slice(1),
         })
+
+        // if (this.state.planets.length % 2 == 0) {
+        //   this.elliott.pause()
+        //   this.audio.play()
+        // } else {
+        //   this.audio.pause()
+        //   this.elliott.play()
+        // }
+
       }
-      }
-      else {
-        var newExtraPlanets = [...this.state.extraPlanets, this.state.planets[this.state.planets.length - 1]]
-        var newPlanets = this.state.planets.slice(0, this.state.planets.length - 1)
-        this.setState({
-          planets: this.state.planets.slice(0, this.state.planets.length - 1),
-          extraPlanets: newExtraPlanets,
-        })
-      }
+    }
+    if (this.state.extraPlanets.length === 0) {
+      this.setState({
+        planets: planets,
+        extraPlanets: extraPlanets
+      })
+    }
+
+      // else {
+      //   var newExtraPlanets = [...this.state.extraPlanets, this.state.planets[this.state.planets.length - 1]]
+      //   var newPlanets = this.state.planets.slice(0, this.state.planets.length - 1)
+      //   this.setState({
+      //     planets: this.state.planets.slice(0, this.state.planets.length - 1),
+      //     extraPlanets: newExtraPlanets,
+      //   })
+      // }
 
 
 
@@ -195,9 +239,13 @@ export default class Maddie extends React.Component {
 
     return (
       <div>
+        <audio ref={audio => this.audio = audio}>
+          <source src="./src/Maddie Wan Wan.m4a" type="audio/mpeg"/>
+        </audio>
+        <audio src="./src/blahblah.m4a" ref={elliott => this.elliott = elliott}/>
         <div style={{color: 'white',
                      fontSize: '2em'}}>
-          {this.state.planets[this.state.planets.length - 1].name}
+          Does size end? Click to see how big some stars and planets are...
         </div>
         <svg style={SVG_STYLE} onClick={this.addPlanet} width={width} height={height} ref={c => this.chart = c}>
         </svg>
@@ -221,12 +269,18 @@ export default class Maddie extends React.Component {
 
     // this.alwaysAdd()
     this.d3render()
+
+    window.addEventListener('keydown', this.globalOnKeyDown, true)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.globalOnKeyDown)
   }
 
   d3render() {
 
-    var item = d3.select(this.chart).selectAll('.stars')
-      .data(this.state.items, function(d) { return d.key })
+    // var item = d3.select(this.chart).selectAll('.stars')
+    //   .data(this.state.items, function(d) { return d.key })
     //
     // item.enter().append('circle')
     //   .attr('class', 'item')
@@ -257,7 +311,7 @@ export default class Maddie extends React.Component {
       var planet = d3.select(this.chart).selectAll('.planet')
                     .data(this.state.planets, p => p.name )
 
-    var ent =  planet.enter()
+    var ent = planet.enter()
               .append('g')
               .attr('transform', (planet, index) => {
                 // Set d.x and d.y here so that other elements can use it. d is
@@ -273,7 +327,8 @@ export default class Maddie extends React.Component {
 
 
       planet
-      .transition().duration(800)
+      .attr({fill: planet => planet.color})
+      .transition().duration(700).ease('bounce')
       .attr('transform', (planet, index) => {
         // Set d.x and d.y here so that other elements can use it. d is
         // expected to be an object here.
@@ -283,11 +338,12 @@ export default class Maddie extends React.Component {
       })
       .selectAll('circle')
             .attr({
-            fill: planet => planet.color,
+
             r: planet => xPlanets(planet.radius),
             // cy: planet => height - 20 - xPlanets(planet.radius),
             // cx: (planet, index) => width - xPlanets(this.planetStart(index))
           })
+
 
       planet
       .selectAll('text')
@@ -312,7 +368,7 @@ export default class Maddie extends React.Component {
       //             cx: (planet, index) => width - xPlanets(this.planetStart(index))
       //           })
       //
-       d3.select(this.chart).select('.x.axis')
+       d3.select(this.chart).filter(':not(.exiting)').select('.x.axis')
                 .transition().duration(500)
                 .call(xAxisPlanets)
 
