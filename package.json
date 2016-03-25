@@ -13,9 +13,10 @@
     "test:watch": "NODE_ENV=test mocha -w --reporter progress --compilers js:'babel-core/register' --recursive \"./__tests__/**/*.spec.js\"",
     "start": "node ./lib/index.js",
     "dev": "babel-watch -w ./server ./server/index.js",
-    "build": "NODE_ENV=production babel ./server -d ./lib && webpack -p",
+    "build": "NODE_ENV=production babel ./server -d ./lib && npm run build:webpack",
+    "build:webpack": "webpack -p",
     "procfile": "npm run build && npm start",
-    "gh-pages": "npm run build && gh-pages -d dist -b gh-pages"
+    "gh-pages": "npm run build:webpack && gh-pages -d dist -b gh-pages"
   },
   "author": "Alex Chan <alexander.m.chan@gmail.com>",
   "license": "MIT",
