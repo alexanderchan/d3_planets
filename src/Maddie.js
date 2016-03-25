@@ -1,6 +1,5 @@
 import d3 from 'd3'
 import React from 'react'
-// var Howl = require('howler').Howl
 
 require('./Maddie Wan Wan.m4a')
 require('./blahblah.m4a')
@@ -173,18 +172,6 @@ export default class Maddie extends React.Component {
       }
     }
 
-    //
-    // this.sound = new Howl({
-    //   src: 'src/Maddie Wan Wan.m4a',
-    //   // autoplay: true,
-    //   // loop: true,
-    //   // volume: 0.5,
-    //   // onend: function() {
-    //   //   console.log('Finished!')
-    //   // }
-    // })
-
-
     }
 
     this.addPlanet = () => {
@@ -238,17 +225,18 @@ export default class Maddie extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="content">
         <audio ref={audio => this.audio = audio}>
           <source src="./src/Maddie Wan Wan.m4a" type="audio/mpeg"/>
         </audio>
         <audio src="./src/blahblah.m4a" ref={elliott => this.elliott = elliott}/>
         <div style={{color: 'white',
-                     fontSize: '2em'}}>
-          Does size end? Click to see how big some stars and planets are...
+        fontSize: '2em'}}>
+        Does size end? Click to see how big some stars and planets are...
         </div>
         <svg style={SVG_STYLE} onClick={this.addPlanet} width={width} height={height} ref={c => this.chart = c}>
         </svg>
+        <div>Based on <a href="https://www.youtube.com/watch?v=b-OHs70hZsM">this youtube vid</a> and some data from Wikipedia</div>
       </div>
 
         )
