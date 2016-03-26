@@ -100,7 +100,7 @@ var extraPlanets = [
   //   color: '#BA0000'
   // },
   {
-    name: 'VY Canis Majoris (Red Hypergiant)',
+    name: 'VY Canis Majoris',
     radius: 1420 * R,
     color: '#F4E4CB',
     textColor: 'black'
@@ -182,13 +182,13 @@ export default class Maddie extends React.Component {
           extraPlanets: this.state.extraPlanets.slice(1),
         })
 
-        // if (this.state.planets.length % 2 == 0) {
-        //   this.elliott.pause()
-        //   this.audio.play()
-        // } else {
-        //   this.audio.pause()
-        //   this.elliott.play()
-        // }
+        if (this.state.planets.length % 2 == 0) {
+          this.elliott.pause()
+          this.audio.play()
+        } else {
+          this.audio.pause()
+          this.elliott.play()
+        }
 
       }
     }
