@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "start": "parcel ./src/index.html",
-    "build": "npm run clean && parcel build ./src/index.html -d docs/",
+    "build": "npm run clean && parcel build ./src/index.html -d docs/ --public-url '.'",
     "build:webpack": "webpack -p",
     "procfile": "npm run build && npm start",
     "gh-pages": "npm run build && gh-pages -d dist -b gh-pages"
