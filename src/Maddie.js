@@ -220,10 +220,10 @@ export default class Maddie extends React.Component {
     return (
       <div className="content">
         <audio ref={audio => (this.audio = audio)}>
-          <source src="./src/Maddie Wan Wan.m4a" type="audio/mpeg" />
+          <source src="./Maddie Wan Wan.m4a" type="audio/mpeg" />
         </audio>
         <audio ref={elliott => (this.elliott = elliott)}>
-          <source src="./src/blahblah.m4a" type="audio/mpeg" />
+          <source src="./blahblah.m4a" type="audio/mpeg" />
         </audio>
         <div style={{ color: 'white', fontSize: '2em' }}>
           Does size end? Click to see how big some stars and planets are...
