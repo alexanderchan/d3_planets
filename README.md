@@ -1,17 +1,11 @@
-[App on heroku](https://sleepy-journey-51543.herokuapp.com/)
+# d3_planets
 
-### Creating a quick heroku instance
+A fun planet example created on a sick day with the kids
 
-```shell
-heroku create
-heroku config:set NPM_CONFIG_PRODUCTION=false
-git push heroku master
-heroku open
-```
+## Local dev
 
-Also these params are used:
+`npm run start`
 
-| Parameter         | example                 |
-| ---------         | --------                |
-| DB_CONNECTION_URL | postgres://.... |
-| SHORT_PREFIX      | https://sleepy-journey-51543.herokuapp.com |
+## Build to the docs
+
+`npm run build`
