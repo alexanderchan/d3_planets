@@ -1,8 +1,8 @@
 import d3 from 'd3'
 import React from 'react'
 
-require('./Maddie Wan Wan.m4a')
-require('./blahblah.m4a')
+const maddieSound = require('./Maddie Wan Wan.m4a')
+const blahblahSound = require('./blahblah.m4a')
 
 const R = 695.7
 
@@ -220,10 +220,10 @@ export default class Maddie extends React.Component {
     return (
       <div className="content">
         <audio ref={audio => (this.audio = audio)}>
-          <source src="./Maddie Wan Wan.m4a" type="audio/mpeg" />
+          <source src={maddieSound} type="audio/mpeg" />
         </audio>
         <audio ref={elliott => (this.elliott = elliott)}>
-          <source src="./blahblah.m4a" type="audio/mpeg" />
+          <source src={blahblahSound} type="audio/mpeg" />
         </audio>
         <div style={{ color: 'white', fontSize: '2em' }}>
           Does size end? Click to see how big some stars and planets are...
