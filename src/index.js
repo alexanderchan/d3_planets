@@ -5,7 +5,4 @@ import Maddie from './Maddie'
 // import Howler from 'howler'
 import './style.scss'
 
-  ReactDOM.render(
-    React.createElement(Maddie),
-    document.getElementById('app')
-  )
+ReactDOM.render(React.createElement(Maddie), document.getElementById('app'))
